@@ -1,23 +1,21 @@
 export interface LoginData {
-    email:   string;
+    username:   string;
     password: string;
 }
 
 export interface RegisterData {
-    email:   string;
+    username:   string;
     password: string;
-    nombre:   string;
 }
 
 
 export interface LoginResponse {
-    usuario: Usuario;
+    id: string;
+    username: string;
     token:   string;
 }
 
 export interface Usuario {
-    estado: string;
-    nombre: string;
-    email: string;
-    id:    string;
+    username: string;
+    id: string;
 }

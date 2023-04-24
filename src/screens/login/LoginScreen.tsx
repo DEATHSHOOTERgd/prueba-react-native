@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity } from 'react-native';
 import { Logo } from '../../components/Logo';
 import { styles } from '../../theme/AppTheme'; 
 import { useForm } from '../../hooks/useForm'; 
@@ -12,8 +12,8 @@ export const LoginScreen = ({ navigation }: Props) => {
 
     const { signIn, errorMessage, removeError } = useContext( AuthContext );
 
-    const { email, password, onChange } = useForm({
-       email: '',
+    const { username, password, onChange } = useForm({
+       username: '',
        password: ''
     });
 
@@ -28,9 +28,8 @@ export const LoginScreen = ({ navigation }: Props) => {
     }, [ errorMessage ]);
 
     const onLogin = () => {
-        console.log({email, password});
         Keyboard.dismiss();
-        signIn({ email: email, password });
+        signIn({ username: username, password });
     };
 
     return (
@@ -44,22 +43,20 @@ export const LoginScreen = ({ navigation }: Props) => {
                 <View style={ styles.formContainer }>
                     <Logo />
 
-                    <Text style={ styles.title }>Login</Text>
+                    <Text style={ styles.title }>Iniciar Sesión</Text>
 
-                    <Text style={ styles.label }>Email:</Text>
+                    <Text style={ styles.label }>Usuario:</Text>
                     <TextInput 
-                        placeholder="Ingrese su email:"
+                        placeholder="Ingrese su nombre de usuario:"
                         placeholderTextColor="rgba(255,255,255,0.4)"
-                        keyboardType="email-address"
                         underlineColorAndroid="white"
                         style={[ 
                             styles.inputField,
-                            ( Platform.OS === 'ios' ) && styles.inputFieldIOS
                         ]}
                         selectionColor="white"
 
-                        onChangeText={ (value) => onChange(value, 'email') }
-                        value={ email }
+                        onChangeText={ (value) => onChange(value, 'username') }
+                        value={ username }
                         onSubmitEditing={ onLogin }
 
 
@@ -70,13 +67,12 @@ export const LoginScreen = ({ navigation }: Props) => {
 
                     <Text style={ styles.label }>Contraseña:</Text>
                     <TextInput 
-                        placeholder="******"
+                        placeholder="Ingrese su contraseña"
                         placeholderTextColor="rgba(255,255,255,0.4)"
                         underlineColorAndroid="white"
                         secureTextEntry
                         style={[ 
                             styles.inputField,
-                            ( Platform.OS === 'ios' ) && styles.inputFieldIOS
                         ]}
                         selectionColor="white"
 
@@ -93,7 +89,7 @@ export const LoginScreen = ({ navigation }: Props) => {
                             style={ styles.button }
                             onPress={ onLogin }
                         >
-                            <Text style={ styles.buttonText } >Login</Text>
+                            <Text style={ styles.buttonText } >Iniciar Sesión</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={ styles.newUserContainer  }>

@@ -17,9 +17,8 @@ export const RegisterScreen = ( { navigation }: Props ) => {
 
     const { signUp, errorMessage, removeError } = useContext( AuthContext );
 
-    const { email, password, name, onChange } = useForm({
-        name: '',
-        email: '',
+    const { password, username, onChange } = useForm({
+        username: '',
         password: '',
      });
 
@@ -36,8 +35,7 @@ export const RegisterScreen = ( { navigation }: Props ) => {
     const onRegister = () => {
         Keyboard.dismiss();
         signUp({
-            nombre: name,
-            email,
+            username: username,
             password,
         });
     };
@@ -63,44 +61,20 @@ export const RegisterScreen = ( { navigation }: Props ) => {
                         underlineColorAndroid="white"
                         style={[ 
                             styles.inputField,
-                            ( Platform.OS === 'ios' ) && styles.inputFieldIOS
                         ]}
                         selectionColor="white"
 
-                        onChangeText={ (value) => onChange(value, 'name') }
-                        value={ name }
+                        onChangeText={ (value) => onChange(value, 'username') }
+                        value={ username }
                         onSubmitEditing={ onRegister }
 
                         autoCapitalize="words"
                         autoCorrect={ false }
                     />
 
-
-                    <Text style={ styles.label }>Email:</Text>
-                    <TextInput 
-                        placeholder="Ingrese su email:"
-                        placeholderTextColor="rgba(255,255,255,0.4)"
-                        keyboardType="email-address"
-                        underlineColorAndroid="white"
-                        style={[ 
-                            styles.inputField,
-                            ( Platform.OS === 'ios' ) && styles.inputFieldIOS
-                        ]}
-                        selectionColor="white"
-
-                        onChangeText={ (value) => onChange(value, 'email') }
-                        value={ email }
-                        onSubmitEditing={ onRegister }
-
-
-                        autoCapitalize="none"
-                        autoCorrect={ false }
-                    />
-
-
                     <Text style={ styles.label }>Contraseña:</Text>
                     <TextInput 
-                        placeholder="******"
+                        placeholder="Ingrese su contraseña."
                         placeholderTextColor="rgba(255,255,255,0.4)"
                         underlineColorAndroid="white"
                         secureTextEntry
@@ -131,9 +105,8 @@ export const RegisterScreen = ( { navigation }: Props ) => {
                         activeOpacity={ 0.8 }
                         style={ styles.buttonReturn }
                     >
-                        <Text style={ styles.buttonText  }>Login</Text>
+                        <Text style={ styles.buttonText  }>Iniciar Sesión</Text>
                     </TouchableOpacity>
-
                 </View>
             </KeyboardAvoidingView>
         </>

@@ -9,7 +9,7 @@ type AuthContextProps = {
     token: string | null;
     user: Usuario | null;
     status: 'checking' | 'authenticated' | 'not-authenticated';
-    signUp: ( registerData: RegisterData ) => Usuario;
+    signUp: ( registerData: RegisterData ) => void;
     signIn: ( loginData: LoginData ) => void;
     logOut: () => void;
     removeError: () => void;
@@ -35,39 +35,36 @@ export const AuthProvider = ({ children }: any)=> {
     }, [])
 
     const checkToken = async() => {
-        const token = await AsyncStorage.getItem('token');
+        const token = JSON.parse(await AsyncStorage.getItem('token')??'null');
 
-        console.log(token);
         if ( !token ) return dispatch({ type: 'notAuthenticated' });
 
-        const resp = await authApi.get('/auth');
-        if ( resp.status !== 200 ) {
-            return dispatch({ type: 'notAuthenticated' });
-        }
-        await AsyncStorage.setItem('token', resp.data.token );
         dispatch({ 
             type: 'signUp',
             payload: {
-                token: resp.data.token,
-                user: resp.data.usuario
+                token: token.token,
+                user: {username:token.username, id:token.id}
             }
         });
     }
 
 
-    const signIn = async({ email, password }: LoginData ) => {
+    const signIn = async({ username, password }: LoginData ) => {
 
         try {
-            const { data } = await authApi.post<LoginResponse>('/auth/login', { email, password } );
+            const { data } = await authApi.post<LoginResponse>('/usuario/login', { username, password } );
             dispatch({ 
                 type: 'signUp',
                 payload: {
                     token: data.token,
-                    user: data.usuario
+                    user: {
+                        username:data.username,
+                        id:data.id,
+                    }
                 }
             });
 
-            await AsyncStorage.setItem('token', data.token );
+            await AsyncStorage.setItem('token', JSON.stringify({token:data.token, id:data.id, username:data.username}) );
 
         } catch (error) {
             dispatch({ 
@@ -77,20 +74,19 @@ export const AuthProvider = ({ children }: any)=> {
         }
     };
     
-    const signUp = async( { nombre, email, password }: RegisterData ) => {
-
+    const signUp = async( { username,  password }: RegisterData ) => {
+console.log('Hola')
         try {
-            await authApi.post<LoginResponse>('/usuarios', { email, password, nombre } );
-            const { data } = await authApi.post<LoginResponse>('/auth/login', { email, password } );
+            const { data } = await authApi.post<LoginResponse>('/usuario/', { username, password } );
             dispatch({ 
                 type: 'signUp',
                 payload: {
                     token: data.token,
-                    user: data.usuario,
+                    user: {username:data.username,id:data.id},
                 }
             });
 
-            await AsyncStorage.setItem('token', data.token );
+            await AsyncStorage.setItem('token', JSON.stringify({token:data.token, id:data.id, username:data.username}) );
 
         } catch (error) {
             dispatch({ 

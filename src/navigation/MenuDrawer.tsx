@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { DrawerContentScrollView, createDrawerNavigator, DrawerContentComponentProps} from '@react-navigation/drawer';
 import { TouchableOpacity, useWindowDimensions, View, Text, Image } from 'react-native';
 import {styles} from '../theme/AppTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LoginStackNav } from './LoginStackNav';
+import { AuthContext } from '../context/AuthContext';
+import { CuestionarioListScreen } from '../screens/cuestionario/CuestionarioListScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -18,13 +19,13 @@ export const  MenuDrawer = ()=>{
 
         drawerContent={(props)=><MenuInterno {...props}/>}
         >
-            <Drawer.Screen name="DepaStackNav" component={LoginStackNav}/>
-            <Drawer.Screen name="ClienteStackNav" component={LoginStackNav}/>
+            <Drawer.Screen name="CuestionarioListScreen" component={CuestionarioListScreen}/>
         </Drawer.Navigator>
     );
 }
 
 const MenuInterno = ({navigation}:DrawerContentComponentProps<any>)=>{
+    const {logOut} = useContext( AuthContext );
 
     return (
         <DrawerContentScrollView>
@@ -43,18 +44,18 @@ const MenuInterno = ({navigation}:DrawerContentComponentProps<any>)=>{
                     }}
                     onPress={()=>navigation.navigate('ClienteStackNav')}
                 >
-                    <Icon name='compass-outline' size={23} style={{paddingEnd:10}} color='black' />
-                    <Text style={styles.menuTexto}>Cliente</Text>
+                    <Icon name='book-outline' size={23} style={{paddingEnd:10}} color='black' />
+                    <Text style={styles.menuTexto}>Cuestionarios</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={{
                         ...styles.menuBoton,
                         flexDirection:'row',
                     }}
-                    onPress={()=>navigation.navigate('LoginStackNav')}
+                    onPress={logOut}
                 >
                     <Icon name='log-in-outline' size={23} style={{paddingEnd:10}} color='black' />
-                    <Text style={styles.menuTexto}>Iniciar Sesión</Text>
+                    <Text style={styles.menuTexto}>Cerrar Sesión</Text>
                 </TouchableOpacity>
             </View>
         </DrawerContentScrollView>
