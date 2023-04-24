@@ -4,7 +4,7 @@ import { TouchableOpacity, useWindowDimensions, View, Text, Image } from 'react-
 import {styles} from '../theme/AppTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/AuthContext';
-import { CuestionarioListScreen } from '../screens/cuestionario/CuestionarioListScreen';
+import { CuestionarioStackNav } from './CuestionarioStackNav';
 
 const Drawer = createDrawerNavigator();
 
@@ -17,9 +17,10 @@ export const  MenuDrawer = ()=>{
             title:'',
         } }
 
+
         drawerContent={(props)=><MenuInterno {...props}/>}
         >
-            <Drawer.Screen name="CuestionarioListScreen" component={CuestionarioListScreen}/>
+            <Drawer.Screen name="CuestionarioStackNav" component={CuestionarioStackNav}/>
         </Drawer.Navigator>
     );
 }

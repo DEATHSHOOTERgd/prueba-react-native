@@ -7,9 +7,9 @@ const authApi = axios.create({ baseURL });
 
 authApi.interceptors.request.use(
     async(config) => {
-        const token = await AsyncStorage.getItem('token');
+        const token = JSON.parse(await AsyncStorage.getItem('token') ?? 'null');
         if ( token ) {
-            config.headers['x-token'] = token;
+            config.headers['authorization'] = 'Bearer ' + token.token;
         }
         return config;
     }

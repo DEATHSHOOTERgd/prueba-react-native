@@ -6,21 +6,7 @@ export const colors = {
 
 export const styles = StyleSheet.create({
     globalMargin:{
-        marginHorizontal:20
-    },
-    botonGrande: {
-        width: 100,
-        height: 100,
-        backgroundColor: 'red',
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-    },
-    botonGrandeTexto: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
+        marginHorizontal:20,
     },
     avatarContainer: {
         alignItems:'center',
@@ -97,5 +83,33 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 100
+    },
+    cardContainer:{
+        flexDirection:'row',
+        flex:1,
+        backgroundColor:'white',
+        padding:50,
+        marginVertical: 10,
+        borderRadius:20,
+        elevation:1,
+        textAlign:'center',
+        alignContent:'center',
+        fontSize:30,
+    },
+    cardTitle:{
+        flex:1,
+        flexDirection:'column',
+        fontSize:30,
+    },
+    cardButton:{
+        flex:1,
+        flexDirection:'column',
+        alignSelf:'flex-end',
+        fontSize:30,
+        backgroundColor:'#03002d',
+        paddingVertical:10,
+        paddingHorizontal:15,
+        borderRadius:50,
+        color:'white',
     },
 });
